@@ -1,0 +1,33 @@
+name: slotbook-interview
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: slotbook
+      POSTGRES_PASSWORD: slotbook
+      POSTGRES_DB: slotbook
+    ports:
+      - "127.0.0.1:55432:5432"
+    volumes:
+      - slotbook-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U slotbook -d slotbook"]
+      interval: 2s
+      timeout: 3s
+      retries: 30
+  app:
+    build: .
+    ports:
+      - "127.0.0.1:3000:3000"
+    environment:
+      DATABASE_URL: postgres://slotbook:slotbook@db:5432/slotbook
+      NODE_ENV: production
+      PORT: 3000
+      HOST_PASSWORD: ${HOST_PASSWORD:-slotbook-demo}
+      SESSION_SECRET: ${SESSION_SECRET:-local-demo-session-secret-change-before-deploy}
+      MANAGE_TOKEN_SECRET: ${MANAGE_TOKEN_SECRET:-local-demo-manage-secret-change-before-deploy}
+    depends_on:
+      db:
+        condition: service_healthy
+volumes:
+  slotbook-data:
