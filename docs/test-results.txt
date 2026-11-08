@@ -1,0 +1,44 @@
+Slotbook test results
+Recorded: 2026-11-08
+Command: DATABASE_URL=postgres://slotbook:slotbook@localhost:55432/slotbook npm test
+Runtime: v26.7.0
+Database: PostgreSQL 16.15 on aarch64-unknown-linux-musl, compiled by gcc (Alpine 15.2.0) 15.2.0, 64-bit
+
+
+> slotbook@1.0.0 test
+> node --import tsx --test --test-concurrency=1 tests/*.test.ts
+
+✔ 30 simultaneous requests for one seat: exactly one succeeds (314.092792ms)
+✔ group capacity counts held and confirmed seats, never exceeds three (182.054125ms)
+✔ lost hold response: simultaneous retries return one hold; changed payload is rejected (65.379208ms)
+✔ expiry race: an expired hold cannot confirm when a replacement claims its seat (26.327583ms)
+✔ a confirmation waiting for a lock uses database time after the wait (386.892ms)
+✔ terminal expiry cannot resurrect after the expiry timestamp moves back into the future (59.105041ms)
+✔ a failed reschedule rolls back and preserves the original confirmed booking (66.837ms)
+✔ host conflicts apply across event types, including buffers (42.700667ms)
+✔ confirm and cancel retries are idempotent and do not duplicate notification events (72.520125ms)
+✔ Postgres rejects overlapping sessions, duplicate seats and invented capacity even without the service lock (17.615583ms)
+✔ application clock skew cannot change the database hold deadline or booking horizon (34.29775ms)
+✔ a confirm retry with different guest details cannot overwrite the original guest (25.429584ms)
+✔ idempotency is scoped to the host and binds the event as well as the canonical instant (22.141709ms)
+✔ successful reschedule retries move one seat once and emit one notification (70.386791ms)
+✔ rescheduling can overlap its own old buffer because release and reserve are atomic (31.420875ms)
+✔ rescheduling one group attendee cannot release the remaining attendee’s host occupancy (37.416875ms)
+✔ invalid host dates, weekdays and windows are rejected without changing existing settings (5.957625ms)
+✔ changing the host zone or availability preserves previously confirmed booking instants (34.017584ms)
+✔ reschedule slot discovery ignores the moving booking but preserves other group attendees (173.699084ms)
+✔ spring DST: nonexistent 02:00 and 02:30 starts are skipped instead of shifted (7.339292ms)
+✔ fall DST: ambiguous local starts use the earlier occurrence once (1.040375ms)
+✔ a host wall time resolves to one instant that a guest can display in another zone (1.023791ms)
+✔ date overrides replace weekly windows and an empty override closes the day (0.657458ms)
+✔ minimum notice and booking horizon are checked against the supplied database time (0.77775ms)
+ℹ tests 24
+ℹ suites 0
+ℹ pass 24
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1916.9005
+
+Exit status: 0
