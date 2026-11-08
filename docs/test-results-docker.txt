@@ -1,0 +1,158 @@
+
+> slotbook@1.0.0 test
+> node --import tsx --test --test-concurrency=1 tests/*.test.ts
+
+TAP version 13
+# Subtest: 30 simultaneous requests for one seat: exactly one succeeds
+ok 1 - 30 simultaneous requests for one seat: exactly one succeeds
+  ---
+  duration_ms: 249.612695
+  type: 'test'
+  ...
+# Subtest: group capacity counts held and confirmed seats, never exceeds three
+ok 2 - group capacity counts held and confirmed seats, never exceeds three
+  ---
+  duration_ms: 110.578125
+  type: 'test'
+  ...
+# Subtest: lost hold response: simultaneous retries return one hold; changed payload is rejected
+ok 3 - lost hold response: simultaneous retries return one hold; changed payload is rejected
+  ---
+  duration_ms: 32.385397
+  type: 'test'
+  ...
+# Subtest: expiry race: an expired hold cannot confirm when a replacement claims its seat
+ok 4 - expiry race: an expired hold cannot confirm when a replacement claims its seat
+  ---
+  duration_ms: 15.353056
+  type: 'test'
+  ...
+# Subtest: a confirmation waiting for a lock uses database time after the wait
+ok 5 - a confirmation waiting for a lock uses database time after the wait
+  ---
+  duration_ms: 378.775145
+  type: 'test'
+  ...
+# Subtest: terminal expiry cannot resurrect after the expiry timestamp moves back into the future
+ok 6 - terminal expiry cannot resurrect after the expiry timestamp moves back into the future
+  ---
+  duration_ms: 34.065805
+  type: 'test'
+  ...
+# Subtest: a failed reschedule rolls back and preserves the original confirmed booking
+ok 7 - a failed reschedule rolls back and preserves the original confirmed booking
+  ---
+  duration_ms: 26.759326
+  type: 'test'
+  ...
+# Subtest: host conflicts apply across event types, including buffers
+ok 8 - host conflicts apply across event types, including buffers
+  ---
+  duration_ms: 13.860068
+  type: 'test'
+  ...
+# Subtest: confirm and cancel retries are idempotent and do not duplicate notification events
+ok 9 - confirm and cancel retries are idempotent and do not duplicate notification events
+  ---
+  duration_ms: 28.769366
+  type: 'test'
+  ...
+# Subtest: Postgres rejects overlapping sessions, duplicate seats and invented capacity even without the service lock
+ok 10 - Postgres rejects overlapping sessions, duplicate seats and invented capacity even without the service lock
+  ---
+  duration_ms: 8.136662
+  type: 'test'
+  ...
+# Subtest: application clock skew cannot change the database hold deadline or booking horizon
+ok 11 - application clock skew cannot change the database hold deadline or booking horizon
+  ---
+  duration_ms: 14.512331
+  type: 'test'
+  ...
+# Subtest: a confirm retry with different guest details cannot overwrite the original guest
+ok 12 - a confirm retry with different guest details cannot overwrite the original guest
+  ---
+  duration_ms: 8.980763
+  type: 'test'
+  ...
+# Subtest: idempotency is scoped to the host and binds the event as well as the canonical instant
+ok 13 - idempotency is scoped to the host and binds the event as well as the canonical instant
+  ---
+  duration_ms: 6.564506
+  type: 'test'
+  ...
+# Subtest: successful reschedule retries move one seat once and emit one notification
+ok 14 - successful reschedule retries move one seat once and emit one notification
+  ---
+  duration_ms: 24.143649
+  type: 'test'
+  ...
+# Subtest: rescheduling can overlap its own old buffer because release and reserve are atomic
+ok 15 - rescheduling can overlap its own old buffer because release and reserve are atomic
+  ---
+  duration_ms: 12.18941
+  type: 'test'
+  ...
+# Subtest: rescheduling one group attendee cannot release the remaining attendee’s host occupancy
+ok 16 - rescheduling one group attendee cannot release the remaining attendee’s host occupancy
+  ---
+  duration_ms: 13.09497
+  type: 'test'
+  ...
+# Subtest: invalid host dates, weekdays and windows are rejected without changing existing settings
+ok 17 - invalid host dates, weekdays and windows are rejected without changing existing settings
+  ---
+  duration_ms: 3.787784
+  type: 'test'
+  ...
+# Subtest: changing the host zone or availability preserves previously confirmed booking instants
+ok 18 - changing the host zone or availability preserves previously confirmed booking instants
+  ---
+  duration_ms: 11.931196
+  type: 'test'
+  ...
+# Subtest: reschedule slot discovery ignores the moving booking but preserves other group attendees
+ok 19 - reschedule slot discovery ignores the moving booking but preserves other group attendees
+  ---
+  duration_ms: 125.81797
+  type: 'test'
+  ...
+# Subtest: spring DST: nonexistent 02:00 and 02:30 starts are skipped instead of shifted
+ok 20 - spring DST: nonexistent 02:00 and 02:30 starts are skipped instead of shifted
+  ---
+  duration_ms: 9.6089
+  type: 'test'
+  ...
+# Subtest: fall DST: ambiguous local starts use the earlier occurrence once
+ok 21 - fall DST: ambiguous local starts use the earlier occurrence once
+  ---
+  duration_ms: 1.365986
+  type: 'test'
+  ...
+# Subtest: a host wall time resolves to one instant that a guest can display in another zone
+ok 22 - a host wall time resolves to one instant that a guest can display in another zone
+  ---
+  duration_ms: 1.623074
+  type: 'test'
+  ...
+# Subtest: date overrides replace weekly windows and an empty override closes the day
+ok 23 - date overrides replace weekly windows and an empty override closes the day
+  ---
+  duration_ms: 1.748618
+  type: 'test'
+  ...
+# Subtest: minimum notice and booking horizon are checked against the supplied database time
+ok 24 - minimum notice and booking horizon are checked against the supplied database time
+  ---
+  duration_ms: 1.603866
+  type: 'test'
+  ...
+1..24
+# tests 24
+# suites 0
+# pass 24
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1466.350985

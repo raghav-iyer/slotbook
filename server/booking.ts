@@ -16,7 +16,7 @@ const manageToken = (id: string) =>
   createHmac(
     "sha256",
     process.env.MANAGE_TOKEN_SECRET ??
-      "local-demo-only-change-before-deploying",
+      "local-demo-manage-secret-change-before-deploy",
   )
     .update(id)
     .digest("hex");

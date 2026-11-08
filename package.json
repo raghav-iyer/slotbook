@@ -12,7 +12,7 @@
     "check": "tsc --noEmit"
   },
   "engines": {
-    "node": ">=22"
+    "node": ">=22.12"
   },
   "dependencies": {
     "@js-temporal/polyfill": "0.5.1",
